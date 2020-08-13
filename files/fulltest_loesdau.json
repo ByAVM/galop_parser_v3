@@ -1,0 +1,34 @@
+{
+  "categoryUrl": "https://www.loesdau.de/pferd/koerper/sattelunterlagen/schabracken/",
+  "productData": {
+    "url": "https://www.loesdau.de/l-polo-team-schabracke-formosa-572104.html",
+    "title": "L-Polo Team Schabracke Formosa",
+    "titleRu": "",
+    "description": "Die sportliche Schabracke Formosa von L-Polo Team in voluminoeser Quadrat-Steppung und mit Quick-Dry-Untermaterial. Sehr schick sind die Zierkordeln in Weiss und Hellblau, die Biese in Lilac und die Kontrasteinfassung in Navy. Ein besonderer Blickfang sind die Logo-Stickereien mit Strass-Steinchen beidseitig.",
+    "descriptionRu": "",
+    "colors": [
+      "lilac"
+    ],
+    "colorsRu": [],
+    "sizes": [
+      "lilac",
+      "Warmblut/Vielseitigkeit"
+    ],
+    "sizesRu": [],
+    "price": {
+      "base": 29.95,
+      "sale": 11.65
+    },
+    "imagesSrc": [
+      "https://cdn.loesdau.de/oxid/shops/loesdau/de/live/productimages/1500x1500/572104-l-polo-team-schabracke-formosa-lilac-2.jpg",
+      "https://cdn.loesdau.de/oxid/shops/loesdau/de/live/productimages/1500x1500/572104-l-polo-team-schabracke-formosa-lilac-3.jpg"
+    ],
+    "images": [],
+    "imagesLoaded": 0,
+    "baseVC": "572104 00002",
+    "categories": [],
+    "brand": ""
+  },
+  "productsCount": 42,
+  "hasNext": true
+}
