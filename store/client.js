@@ -1,16 +1,14 @@
 const { MongoClient } = require('mongodb')
 
+const { MONGODB_HOST, MONGODB_DB, MONGODB_PASSWORD, MONGODB_USER} = process.env
+
 /**
  * Создает соединение и выполняет подключение к серверу MongoDB
  * @async
- * @param {String} login Логин пользователя БД
- * @param {String} password Пароль пользователя БД
- * @param {String} host Хост БД
- * @param {String} dbName Название БД
  * @returns Клиент MongoDB
  */
-async function connectToDb(login, password, host, dbName) {
-  const url = `mongodb://${login}:${password}@${host}/${dbName}`
+async function connectToDb() {
+  const url = `mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_HOST}/${MONGODB_DB}`
 
   const connection = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
