@@ -30,8 +30,9 @@ async function converter(product) {
 
   // Перевод описания
   if (product.description.length > 0) {
-    const translation = await deepl(product.description, DEEPL_API_KEY)
+    const translation = await deepl([product.description, ...product.colors], DEEPL_API_KEY)
     product.descriptionRu = translation.shift()
+    product.colorsRu.push(...translation)
   }
 }
 

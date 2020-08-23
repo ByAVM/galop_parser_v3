@@ -1,3 +1,9 @@
+/**
+ * Перевод цветов и размеров.
+ * Перевод размеров выполняется с помощью таблицы-словаря.
+ * Перевод цветов с помощью API Deepl
+ */
+
 const parseCsvFile = require('fast-csv').parseFile
 const pathResolve = require('path').resolve
 const connectToDb = require('../store/client')
@@ -13,11 +19,11 @@ const readDict = (path) => new Promise((resolve, reject) => {
     .on('error', error => reject(error))
 })
 
-async function main(collectionName, cPath, sPath) {
-  const colorsPath = pathResolve(cPath)
+async function main(collectionName, sPath) {
+  // const colorsPath = pathResolve(cPath)
   const sizesPath = pathResolve(sPath)
 
-  const colors = await readDict(colorsPath)
+  // const colors = await readDict(colorsPath)
   const sizes = await readDict(sizesPath)
 
   let client = null
@@ -26,21 +32,21 @@ async function main(collectionName, cPath, sPath) {
     const collection = client.db().collection(collectionName)
 
     const count = await collection.countDocuments()
-    const cursor = await collection.find({}, { _id: true, title: true, colors: true, sizes: true }).addCursorFlag('noCursorTimeout', true)
+    const cursor = await collection.find({}, { _id: true, title: true, /*colors: true,*/ sizes: true }).addCursorFlag('noCursorTimeout', true)
 
     let currentProduct = 1
     while( await cursor.hasNext() ) {
       const product = await cursor.next()
 
-      const colorsRu = []
-      product.colors.forEach(color => {
-        const lc = color.toLowerCase()
-        if (colors[lc]) {
-          colorsRu.push(colors[lc])
-        } else {
-          console.log(`Color ${lc} not found`)
-        }
-      })
+      // const colorsRu = []
+      // product.colors.forEach(color => {
+      //   const lc = color.toLowerCase()
+      //   if (colors[lc]) {
+      //     colorsRu.push(colors[lc])
+      //   } else {
+      //     console.log(`Color ${lc} not found`)
+      //   }
+      // })
 
       const sizesRu = []
       product.sizes.forEach(size => {
@@ -54,7 +60,7 @@ async function main(collectionName, cPath, sPath) {
 
       await collection.updateOne(
         { id: product._id },
-        { $set: { colorsRu, sizesRu }
+        { $set: { /*colorsRu,*/ sizesRu }
       })
 
       console.log(`Done [${currentProduct++} / ${count}] ${product.title}`)

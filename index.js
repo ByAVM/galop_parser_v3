@@ -42,14 +42,14 @@ require('yargs')
 
     await makeDictionary(args.collection, args.savepath)
   })
-  .command('translate <collection> <colorspath> <sizespath>', 'Выполнить перевод цветов и размеров с помощью словарей', yargs => {
+  .command('translate <collection> <sizespath>', 'Выполнить перевод размеров с помощью словаря', yargs => {
     yargs
       .positional('collection', {
         describe: 'Название коллекции в БД для обработки'
       })
-      .positional('colorspath', {
-        describe: 'Путь к CSV-словарю цветов'
-      })
+      // .positional('colorspath', {
+      //   describe: 'Путь к CSV-словарю цветов'
+      // })
       .positional('sizespath', {
         describe: 'Путь к CSV-словарю размеров'
       })
