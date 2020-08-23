@@ -8,6 +8,8 @@ const deepl = require('../lib/translate/deepl')
 
 require('dotenv').config()
 
+const { BASE_RATE, SALE_RATE, DEEPL_API_KEY } = process.env
+
 const storeList = {
   hypostore: require('../lib/Hypostore'),
   hkm: require('../lib/Hkm'),
@@ -23,12 +25,12 @@ const storeList = {
 async function converter(product) {
   // Конвертация цен
   const base = product.price.base
-  product.price.base = round(base, 110)
-  product.price.sale = round(base, 95)
+  product.price.base = round(base, BASE_RATE)
+  product.price.sale = round(base, SALE_RATE)
 
   // Перевод описания
   if (product.description.length > 0) {
-    const translation = await deepl(product.description, process.env.DEEPL_API_KEY)
+    const translation = await deepl(product.description, DEEPL_API_KEY)
     product.descriptionRu = translation.shift()
   }
 }
