@@ -2,7 +2,7 @@ const fulltest = require('./run/fulltest')
 const startParser = require('./run/parser')
 const makeDictionary = require('./run/dictionary')
 const translateProducts = require('./run/translate')
-const startUpload = require('./run/upload')
+// const startUpload = require('./run/upload')
 
 require('yargs')
   .command('parse <store> <table>', 'Начать парсинг', yargs => {
@@ -15,14 +15,10 @@ require('yargs')
         describe: 'Путь к таблице с категориями',
         type: 'string'
       })
-      .option('collection', {
-        alias: 'c',
-        default: ''
-      })
   }, async args => {
-    console.log('Выполняется парсинг')
+    console.log(`Выполняется парсинг ${args.store} таблица: ${args.table}`)
 
-    await startParser(args.store, args.table, args.collection)
+    await startParser(args.store, args.table)
   })
   .command('fulltest', 'Провести тестирование парсера с реальными запросами', yargs => {}, async args => {
     console.log('Выполняется полное тестирование')

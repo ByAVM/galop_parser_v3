@@ -1,3 +1,7 @@
 node_modules
 .env
 .vscode
+log/*
+lib/http/cookies.json
+files
+package-lock.json

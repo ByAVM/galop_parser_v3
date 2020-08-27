@@ -1,12 +1,12 @@
+require('dotenv').config()
+
 const { parser } = require('../lib/Parser')
-const connectToDb = require('../store/client')
+const connectToDb = require('../lib/store/client')
 const readCsv = require('../lib/readCsv')
 const pathResolve = require('path').resolve
 const { round } = require('../lib/Utilities')
-const got = require('got')
+const got = require('../lib/http/got')
 const deepl = require('../lib/translate/deepl')
-
-require('dotenv').config()
 
 const { BASE_RATE, SALE_RATE, DEEPL_API_KEY } = process.env
 
@@ -28,19 +28,31 @@ async function converter(product) {
   product.price.base = round(base, BASE_RATE)
   product.price.sale = round(base, SALE_RATE)
 
-  // Перевод описания
-  if (product.description.length > 0) {
-    const translation = await deepl([product.description, ...product.colors], DEEPL_API_KEY)
+  const hasDesc = product.description.length > 0
+  const hasColors = product.colors.length > 0
+  const translationArray = []
+
+  if (hasDesc) {
+    translationArray.push(product.description)
+  }
+
+  if (hasColors) {
+    translationArray.push(...product.colors.map(s => s.toLowerCase()))
+  }
+
+  // Перевод
+  const translation = await deepl(translationArray, DEEPL_API_KEY)
+
+  if (hasDesc) {
     product.descriptionRu = translation.shift()
+  }
+
+  if (hasColors) {
     product.colorsRu.push(...translation)
   }
 }
 
-async function main(store, csvPath, collectionName) {
-  if (!collectionName) { collectionName = store }
-
-  const { MONGODB_HOST, MONGODB_NAME, MONGODB_PASSWORD, MONGODB_USER} = process.env
-
+async function main(store, csvPath) {
   if (!(store in storeList)) {
     console.log(`Для магазина '${store}' не найдено обработчиков`)
     return
@@ -51,13 +63,13 @@ async function main(store, csvPath, collectionName) {
   let client = null
   try {
     const csvData = await readCsv(pathResolve( csvPath ))
-    client = await connectToDb(MONGODB_USER, MONGODB_PASSWORD, MONGODB_HOST, MONGODB_NAME)
+    client = await connectToDb()
     const handlers = {
       categoryHandler,
       productHandler,
       converter
     }
-    await parser(client, collectionName, csvData, got, handlers)
+    await parser(client, store, csvData, got, handlers)
   } catch (error) {
     console.error(error)
   }

@@ -6,7 +6,8 @@
 
 const pathResolve = require('path').resolve
 const writeFileSync = require('fs').writeFileSync
-const got = require('got')
+
+const got = require('../lib/http/got')
 
 const stores = {
   hkm: require('../lib/Hkm'),
@@ -49,17 +50,18 @@ async function runTestShop(storeName, categoryUrl, categoryHandler, productHandl
   writeFileSync(pathResolve(__dirname, `../files/fulltest_${storeName}.json`), JSON.stringify(testResult, null, 2))
 }
 
-const start = async () => {
-  console.log('Start full test')
-
+async function start() {
   for (const store in testLinks) {
-    if (!testLinks[store]) {continue}
+    if (!testLinks[store]) {
+      console.log(`Для магазина ${store} не задана ссылка на категорию. Пропуск`)
+      continue
+    }
 
     try {
       await runTestShop(store, testLinks[store], stores[store].categoryHandler, stores[store].productHandler)
       console.log(`Done ${store}`)
     } catch (error) {
-      console.log(error.message)
+      console.log(error.options)
     }
   }
 }

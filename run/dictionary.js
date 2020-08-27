@@ -4,7 +4,7 @@
 
 const writeToPath = require('fast-csv').writeToPath
 const pathResolve = require('path').resolve
-const connectToDb = require('../store/client')
+const connectToDb = require('../lib/store/client')
 
 async function main(collectionName, savePath) {
 

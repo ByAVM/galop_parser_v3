@@ -10,10 +10,10 @@ const easyvk = require('easyvk')
 const connectToDb = require('../store/client')
 require('dotenv').config()
 
-const { MONGODB_HOST, MONGODB_USER, MONGODB_PASSWORD, MONGODB_NAME } = process.env
+const { MONGODB_HOST, MONGODB_USER, MONGODB_PASSWORD, MONGODB_DB } = process.env
 
 async function upload(collectionName) {
-  const client = await connectToDb(MONGODB_USER, MONGODB_PASSWORD, MONGODB_HOST, MONGODB_NAME)
+  const client = await connectToDb(MONGODB_USER, MONGODB_PASSWORD, MONGODB_HOST, MONGODB_DB)
 
   const collection = client.db().collection(collectionName)
 

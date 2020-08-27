@@ -6,10 +6,10 @@
 
 const parseCsvFile = require('fast-csv').parseFile
 const pathResolve = require('path').resolve
-const connectToDb = require('../store/client')
+const connectToDb = require('../lib/store/client')
 require('dotenv').config()
 
-const { MONGODB_HOST, MONGODB_NAME, MONGODB_PASSWORD, MONGODB_USER} = process.env
+const { MONGODB_HOST, MONGODB_DB, MONGODB_PASSWORD, MONGODB_USER} = process.env
 
 const readDict = (path) => new Promise((resolve, reject) => {
   const data = []
@@ -28,7 +28,7 @@ async function main(collectionName, sPath) {
 
   let client = null
   try {
-    client = await connectToDb(MONGODB_USER, MONGODB_PASSWORD, MONGODB_HOST, MONGODB_NAME)
+    client = await connectToDb(MONGODB_USER, MONGODB_PASSWORD, MONGODB_HOST, MONGODB_DB)
     const collection = client.db().collection(collectionName)
 
     const count = await collection.countDocuments()
