@@ -36,9 +36,9 @@ async function converter(product) {
     translationArray.push(product.description)
   }
 
-  if (hasColors) {
-    translationArray.push(...product.colors.map(s => s.toLowerCase()))
-  }
+  // if (hasColors) {
+  //   translationArray.push(...product.colors.map(s => s.toLowerCase()))
+  // }
 
   // Перевод
   const translation = await deepl(translationArray, DEEPL_API_KEY)
@@ -47,9 +47,9 @@ async function converter(product) {
     product.descriptionRu = translation.shift()
   }
 
-  if (hasColors) {
-    product.colorsRu.push(...translation)
-  }
+  // if (hasColors) {
+  //   product.colorsRu.push(...translation)
+  // }
 }
 
 async function main(store, csvPath) {

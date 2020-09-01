@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const fulltest = require('./run/fulltest')
 const startParser = require('./run/parser')
 const makeDictionary = require('./run/dictionary')
@@ -43,9 +45,9 @@ require('yargs')
       .positional('collection', {
         describe: 'Название коллекции в БД для обработки'
       })
-      // .positional('colorspath', {
-      //   describe: 'Путь к CSV-словарю цветов'
-      // })
+      .positional('colorspath', {
+        describe: 'Путь к CSV-словарю цветов'
+      })
       .positional('sizespath', {
         describe: 'Путь к CSV-словарю размеров'
       })
